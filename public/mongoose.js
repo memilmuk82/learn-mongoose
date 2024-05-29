@@ -6,7 +6,7 @@ document.querySelectorAll('#user-list tr').forEach((el) => {
     });
 });
 
-  // 사용자 로딩
+// 사용자 로딩
 async function getUser() {
     try {
         const res = await axios.get('/users'); // 서버에서 사용자 정보를 가져옵니다.
@@ -49,56 +49,56 @@ async function getComment(id) {
         tbody.innerHTML = ''; // 이전에 추가된 내용 삭제
         // 가져온 댓글 정보를 순회하며 테이블에 댓글을 추가
         comments.map(function (comment) {
-        // 각 댓글의 정보를 담는 새로운 행을 생성
-        const row = document.createElement('tr');
-        // 댓글의 ID를 표시하는 셀을 생성하고 콘텐츠를 추가
-        let td = document.createElement('td');
-        td.textContent = comment._id;
-        row.appendChild(td);
-        // 댓글 작성자의 이름을 표시하는 셀을 생성하고 콘텐츠를 추가
-        td = document.createElement('td');
-        td.textContent = comment.commenter.name;
-        row.appendChild(td);
-        // 댓글 내용을 표시하는 셀을 생성하고 콘텐츠를 추가
-        td = document.createElement('td');
-        td.textContent = comment.comment;
-        row.appendChild(td);
-        // 댓글 수정 버튼을 생성하고 클릭 이벤트를 추가
-        const edit = document.createElement('button');
-        edit.textContent = '수정';
-        edit.addEventListener('click', async () => {
-            // 수정 버튼을 클릭했을 때의 동작을 정의
-            const newComment = prompt('바꿀 내용을 입력하세요'); // 사용자에게 새로운 댓글 내용을 입력받음
-            if (!newComment) {
-            return alert('내용을 반드시 입력하셔야 합니다'); // 새로운 댓글 내용이 없는 경우 경고를 표시하고 함수를 종료
-            }
-            try {
-            await axios.patch(`/comments/${comment._id}`, { comment: newComment }); // 서버에 댓글 수정 요청을 보냅니다.
-            getComment(id); // 수정된 댓글 목록을 다시 가져옵니다.
-            } catch (err) {
-            console.error(err); // 오류가 발생한 경우 콘솔에 오류를 출력
-            }
-        });
-        // 댓글 삭제 버튼을 생성하고 클릭 이벤트를 추가
-        const remove = document.createElement('button');
-        remove.textContent = '삭제';
-        remove.addEventListener('click', async () => {
-            // 삭제 버튼을 클릭했을 때의 동작을 정의
-            try {
-            await axios.delete(`/comments/${comment._id}`); // 서버에 댓글 삭제 요청 전송
-            getComment(id); // 삭제된 댓글 목록을 다시 가져옵니다.
-            } catch (err) {
-            console.error(err); // 오류가 발생한 경우 콘솔에 오류를 출력
-            }
-        });
-        // 수정 및 삭제 버튼을 셀에 추가
-        td = document.createElement('td');
-        td.appendChild(edit);
-        row.appendChild(td);
-        td = document.createElement('td');
-        td.appendChild(remove);
-        row.appendChild(td);
-        tbody.appendChild(row); // 행을 tbody에 추가
+            // 각 댓글의 정보를 담는 새로운 행을 생성
+            const row = document.createElement('tr');
+            // 댓글의 ID를 표시하는 셀을 생성하고 콘텐츠를 추가
+            let td = document.createElement('td');
+            td.textContent = comment._id;
+            row.appendChild(td);
+            // 댓글 작성자의 이름을 표시하는 셀을 생성하고 콘텐츠를 추가
+            td = document.createElement('td');
+            td.textContent = comment.commenter.name;
+            row.appendChild(td);
+            // 댓글 내용을 표시하는 셀을 생성하고 콘텐츠를 추가
+            td = document.createElement('td');
+            td.textContent = comment.comment;
+            row.appendChild(td);
+            // 댓글 수정 버튼을 생성하고 클릭 이벤트를 추가
+            const edit = document.createElement('button');
+            edit.textContent = '수정';
+            edit.addEventListener('click', async () => {
+                // 수정 버튼을 클릭했을 때의 동작을 정의
+                const newComment = prompt('바꿀 내용을 입력하세요'); // 사용자에게 새로운 댓글 내용을 입력받음
+                if (!newComment) {
+                return alert('내용을 반드시 입력하셔야 합니다'); // 새로운 댓글 내용이 없는 경우 경고를 표시하고 함수를 종료
+                }
+                try {
+                await axios.patch(`/comments/${comment._id}`, { comment: newComment }); // 서버에 댓글 수정 요청을 보냅니다.
+                getComment(id); // 수정된 댓글 목록을 다시 가져옵니다.
+                } catch (err) {
+                console.error(err); // 오류가 발생한 경우 콘솔에 오류를 출력
+                }
+            });
+            // 댓글 삭제 버튼을 생성하고 클릭 이벤트를 추가
+            const remove = document.createElement('button');
+            remove.textContent = '삭제';
+            remove.addEventListener('click', async () => {
+                // 삭제 버튼을 클릭했을 때의 동작을 정의
+                try {
+                await axios.delete(`/comments/${comment._id}`); // 서버에 댓글 삭제 요청 전송
+                getComment(id); // 삭제된 댓글 목록을 다시 가져옵니다.
+                } catch (err) {
+                console.error(err); // 오류가 발생한 경우 콘솔에 오류를 출력
+                }
+            });
+            // 수정 및 삭제 버튼을 셀에 추가
+            td = document.createElement('td');
+            td.appendChild(edit);
+            row.appendChild(td);
+            td = document.createElement('td');
+            td.appendChild(remove);
+            row.appendChild(td);
+            tbody.appendChild(row); // 행을 tbody에 추가
         });
     } catch (err) {
         console.error(err); // 오류가 발생한 경우 콘솔에 오류를 출력
@@ -138,7 +138,7 @@ document.getElementById('comment-form').addEventListener('submit', async (e) => 
         return alert('아이디를 입력하세요'); // 사용자 ID가 입력되지 않은 경우 경고를 표시하고 함수 종료
     }
     if (!comment) {
-        return alert('댓글을 입력하세요'); // 댓글 내용이 입력되지 않은 경우 경고를 표시하고 함수 종료다.
+        return alert('댓글을 입력하세요'); // 댓글 내용이 입력되지 않은 경우 경고를 표시하고 함수 종료
     }
     try {
         await axios.post('/comments', { id, comment }); // 서버에 새 댓글 정보 등록
